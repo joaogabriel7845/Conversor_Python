@@ -43,7 +43,7 @@ def main(page: ft.Page):
                 self.tema_escuro = True
             self.page.update()
 
-    # Defina a função com o nome correto e parâmetro adequado
+    # Define a função com o nome correto e parâmetro adequado
     def arquivo_selecionado(e: ft.FilePickerResultEvent):
         if e.files:
             file = e.files[0]
