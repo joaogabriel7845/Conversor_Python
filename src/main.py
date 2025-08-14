@@ -53,10 +53,12 @@ def main(page: ft.Page):
         info_arquivo.update()
 
     # Configuração da página...
-    fonte_path = os.path.join(os.path.dirname(__file__), 'assets', 'FiraCode-Medium.ttf', 'Inter.ttf')
+    fonte_fira = os.path.join(os.path.dirname(__file__), 'assets', 'FiraCode-Medium.ttf')
+    fonte_inter = os.path.join(os.path.dirname(__file__), 'assets', 'Inter.ttf')
+
     page.fonts = {
-        "Fira Code": fonte_path,
-        "Inter": fonte_path
+        "Fira Code": fonte_fira,
+        "Inter": fonte_inter
     }
 
     page.title = 'Conversor de Arquivos'
