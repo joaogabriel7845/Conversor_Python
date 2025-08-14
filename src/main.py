@@ -84,6 +84,8 @@ def main(page: ft.Page):
     botao_upload = ft.ElevatedButton(
             text='Selecionar',
             icon=ft.Icons.FILE_OPEN,
+            width=150,
+            height=50,
             on_click=lambda _: file_picker.pick_files(
                 allow_multiple=False,
                 file_type=ft.FilePickerFileType.ANY
@@ -126,7 +128,7 @@ def main(page: ft.Page):
                 linha_divisoria,
                 info_arquivo,
                 ft.Container(
-                    margin=ft.margin.only(top=360),
+                    margin=ft.margin.only(top=330),
                     content=botao_upload
                 )
             ]
