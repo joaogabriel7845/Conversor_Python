@@ -6,7 +6,10 @@ def main(page: ft.Page):
     page.overlay.append(file_picker)
 
     class BotaoTema:
-        def __init__(self, botao, page, texto, tela, area_arquivos, info_arquivo, linha_divisoria):
+        def __init__(self, botao, page, texto, tela, area_arquivos, info_arquivo, linha_divisoria, botao_upload, text_button, icone_select):
+            self.icone_do_botao = icone_select
+            self.texto_do_botao = text_button
+            self.botao_upload = botao_upload
             self.info_arquivo = info_arquivo
             self.linha_divisoria = linha_divisoria
             self.area_arquivos = area_arquivos
@@ -17,30 +20,48 @@ def main(page: ft.Page):
             self.tema_escuro = True
 
         def alternar_tema(self, e):
+
             # Light mode
             if self.tema_escuro:
+                # Mudança das cores dos elementos do APP
                 self.tela.bgcolor = "#9BA8AB"
+
                 self.area_arquivos.bgcolor = "#CCD0CF"
                 self.linha_divisoria.content.color = '#778183'
                 self.info_arquivo.content.color = ft.Colors.BLACK
+                self.botao_upload.bgcolor = "#A1A8AA"
+
+                self.icone_do_botao.color = '#06141B'
+                self.texto_do_botao.color = '#06141B'
+
                 self.botao.icon = ft.Icons.MODE_NIGHT
                 self.botao.icon_color = '#06141B'
                 self.botao.tooltip = 'Modo Escuro'
                 self.botao.rotate = ft.Rotate(3.14)
                 self.texto.content.color = "#06141B"
                 self.tema_escuro = False
+
             # Dark Mode
             else:
+                # Mudança das cores dos elementos do APP
                 self.tela.bgcolor = "#06141B"
+
                 self.area_arquivos.bgcolor = "#11212D"
                 self.linha_divisoria.content.color = '#050F15'
                 self.info_arquivo.content.color = ft.Colors.WHITE
+                self.botao_upload.bgcolor = '#0E1B25'
+
+                self.icone_do_botao.color = 'white'
+                self.texto_do_botao.color = 'white'
+
                 self.botao.icon = ft.Icons.SUNNY
                 self.botao.icon_color = '#ECE360'
                 self.botao.tooltip = 'Modo Claro'
                 self.botao.rotate = ft.Rotate(-3.14)
+                
                 self.texto.content.color = 'white'
                 self.tema_escuro = True
+            # Atualiza as mudanças para ficarem visíveis
             self.page.update()
 
     # Define a função com o nome correto e parâmetro adequado
@@ -83,9 +104,23 @@ def main(page: ft.Page):
             )  
         )
     
+    # - Elementos separados para o controle de cores na alteração de tema
+    # - Adicionados ao botao_upload
+    icone_select = ft.Icon(ft.Icons.FILE_OPEN, color='white')
+    text_button = ft.Text(
+                    value='Selecionar',
+                    color='white',
+                    font_family='Inter'
+                    )
+    
     botao_upload = ft.ElevatedButton(
-            text='Selecionar',
-            icon=ft.Icons.FILE_OPEN,
+            bgcolor="#0E1B25",
+            content=ft.Container(
+                margin=ft.margin.only(left=15),
+                content=ft.Row(
+                    controls=[icone_select, text_button]
+                )
+            ),
             width=150,
             height=50,
             on_click=lambda _: file_picker.pick_files(
@@ -96,9 +131,12 @@ def main(page: ft.Page):
     
 
     info_arquivo = ft.Container(
+        padding=20,
         margin=ft.margin.only(top=30),
         content=ft.Text(
             value='Nenhum arquivo selecionado.',
+            max_lines=1,
+            overflow=ft.TextOverflow.ELLIPSIS,
             color=ft.Colors.WHITE,
             font_family='Inter',
             size=15,
@@ -130,7 +168,7 @@ def main(page: ft.Page):
                 linha_divisoria,
                 info_arquivo,
                 ft.Container(
-                    margin=ft.margin.only(top=330),
+                    margin=ft.margin.only(top=260),
                     content=botao_upload
                 )
             ]
@@ -164,7 +202,7 @@ def main(page: ft.Page):
     page.add(tela)
     
     # Cria a instância do BotaoTema antes de configurar o file_picker
-    botao = BotaoTema(thememode, page, texto, tela, area_arquivos, info_arquivo, linha_divisoria)
+    botao = BotaoTema(thememode, page, texto, tela, area_arquivos, info_arquivo, linha_divisoria, botao_upload, text_button, icone_select)
     
     # Configura o file_picker com a função correta
     file_picker.on_result = arquivo_selecionado
